@@ -135,7 +135,7 @@ class Model {
                     SET msg='" . $msg . "', time= '" . $time . "'
                     WHERE msg_id= '" . $id . "'";
             if ( $this->dao->query($sql) ){
-                echo "修改成功!!";
+                echo "修改成功!! 將於3秒後跳回首頁";
                 header("Refresh: 2; URL=index.php");
             }else{
                 echo "修改失敗!!";
@@ -147,7 +147,7 @@ class Model {
         return $msg_array;
     }
     function deleteNote() {
-        if(isset($_GET['id'])){ //未修改前，輸出原本內容
+        if(isset($_GET["id"])){ //未修改前，輸出原本內容
             $sql = "SELECT *
                     FROM center88_board
                     WHERE msg_id = " . $_GET['id'] . "
@@ -162,7 +162,7 @@ class Model {
             $sql = "DELETE FROM center88_board 
                     WHERE msg_id = '" . $_POST["msg_id"] . "'" ;
             if ( $this->dao->query($sql) ){
-                echo "刪除成功!!";
+                echo "刪除成功!! 將於3秒後跳回首頁";
                 header("Refresh: 2; URL=index.php");
             }else{
                 echo "刪除失敗!!";

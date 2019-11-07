@@ -14,7 +14,7 @@ class listView   //顯示所有留言的子類
         foreach ($notes as $value)
         {
             ?>
-			<table class='cont_tb'>
+			<table class="cont_tb">
 				<tr>
 					<td colspan="2">
 						#<?php echo $value["msg_id"] ?>
