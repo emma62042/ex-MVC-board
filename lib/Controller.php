@@ -31,7 +31,7 @@ class Controller {
 //用於控制顯示留言列表的子類
 class listController extends Controller{   //extends表示繼承
     function __construct ($dao, $page) { //建立model
-        parent::__construct($dao);  //繼承其父類的建構函式
+        parent::__construct($dao);  //繼承其父類的建構函式然後執行(執行1號)
         //該行的含義可以簡單理解為:
         //將其父類的建構函式程式碼複製過來
         $page_array = $this->model->pageArray($page);
@@ -78,10 +78,18 @@ class postController extends Controller{
 }
 //用於控制修改留言的子類
 class modifyController extends Controller{
-    function __construct ($dao, $id) {//連資料庫
+    function __construct ($dao) {//連資料庫
         parent::__construct($dao);//建立model
-        $msg_array = $this->model->modifyNote($id);//先收看看有沒有資料近來
-        $this->view = new postView($msg_array, "modify");
+        $msg_array = $this->model->modifyNote();//先收看看有沒有資料近來
+        $this->view = new modifyView($msg_array);
+    }
+}
+
+class deleteController extends Controller{
+    function __construct ($dao) {
+        parent::__construct($dao);
+        $value = $this->model->deleteNote();
+        $this->view = new deleteView($value);
     }
 }
 ?>

@@ -82,6 +82,12 @@
                     case "post":
                         $controller = new postController($dao); 
                         break;
+                    case "modify":
+                        $controller = new modifyController($dao);
+                        break;
+                    case "delete":
+                        $controller = new deleteController($dao);
+                        break;
                     default:
                         $controller = new listController($dao);
                         break; //預設為顯示留言

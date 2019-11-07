@@ -42,8 +42,8 @@ class listView   //顯示所有留言的子類
 				</tr>
 				<tr>
 					<td colspan="2" style="text-align: right;">
-						<button type="button" onclick="location.href='delete_complete.php?id=<?php echo $value["msg_id"];?>'">刪除</button>
-						<button type="button" onclick="location.href='board-modify.php?id=<?php echo $value["msg_id"];?>'">修改</button>
+						<button type="button" onclick="location.href='index.php?action=delete&id=<?php echo $value["msg_id"];?>'">刪除</button>
+						<button type="button" onclick="location.href='index.php?action=modify&id=<?php echo $value["msg_id"];?>'">修改</button>
 					</td>
 				</tr>
 			</table>
@@ -73,7 +73,7 @@ class listView   //顯示所有留言的子類
 
 class searchView extends listView   //顯示所有留言的子類
 {
-    function __construct($search = NULL)
+    function __construct($search = NULL)//一呼叫就要做的
     {?>
     	<form action="index.php" method="get">
                 <table cellpadding="10" width="600" border="1" align="center">
@@ -96,10 +96,9 @@ class postView   //顯示所有留言的子類
 {
     function __construct($msg_array, $title)
     {
-        $id = empty($msg_array["id"]) ? "" : "&id=" . $msg_array["id"] ;
         ?>
-        <h3><?php echo $title=='post' ? "新增" : "修改" ?>留言</h3>
-            <form action="index.php?action=<?php echo $title; echo $id?>" method="post">
+        <h3><?php echo $title=="post" ? "新增" : "修改" ?>留言</h3>
+        	<form action="index.php?action=<?php echo $title?>" method="post">
             <table  style="border:3px #000000 dashed;" cellpadding="10" width="600" border="1" align="center">
                 <tr>
                     <td>
@@ -144,7 +143,49 @@ class postView   //顯示所有留言的子類
 }
 
 class modifyView extends postView{   //extends表示繼承
-    function __construct ($msg_array) { //建立model
-        parent::__construct($msg_array, "修改");
+    function __construct ($msg_array) { 
+        parent::__construct($msg_array, "modify");
     }
 }
+
+class deleteView {
+    function __construct ($value) {
+        if(isset($_GET['id'])){
+        ?>
+            <form action="index.php?action=delete" method="post">
+            	<table class='cont_tb'>
+    				<tr>
+    					<td colspan="2">
+    						#<?php echo $value["msg_id"] ?>
+    					</td>
+    				</tr>
+    				<tr>
+    					<td>留言標題：</td>
+                        	<td width="450">
+                            	<?php echo $value["msg_title"] ?>
+                        </td>
+                    </tr>
+                    <tr>
+    					<td>留言內容：</td>
+    					<td width="450">
+    					<?php
+    					$msg = str_replace("\n","<br/>",$value["msg"]);
+                            echo $msg;
+                        ?>
+    					</td>
+    				</tr>
+    				<tr>
+    					<td colspan="2" style="text-align: right;">
+    					<?php echo $value["nickname"] . "&nbsp;發表於&nbsp;" . $value["time"] ?>
+    					</td>
+    				</tr>
+    			</table>
+    			<input type="hidden" name="msg_id" value="<?php echo $value["msg_id"]?>">
+    			<button type="submit">確認刪除</button>
+    		</form>
+		
+		<?php
+        }
+    }
+}
+?>

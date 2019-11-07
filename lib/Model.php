@@ -105,6 +105,69 @@ class Model {
        }
        return $msg_array;
     }
-    
+    function modifyNote() {
+        $msg_array["id"] = "";
+        $msg_array["nickname"] = "";
+        $msg_array["msg_title"] = "";
+        $msg_array["msg"] = "";
+        $msg_array["errname"] = "";
+        $msg_array["errtitle"] = "";
+        $msg_array["errmsg"] = "";
+        if(isset($_GET['id'])){ //未修改前，輸出原本內容
+            $msg_array["id"] = $_GET['id'];
+            $sql = "SELECT *
+                    FROM center88_board
+                    WHERE msg_id = " . $msg_array["id"]. "
+                    ORDER BY time DESC";
+            $notes = $this->dao->fetchRows($sql);
+            foreach ($notes as $value)
+            {
+                $msg_array["nickname"] = isset($value["nickname"])?$value["nickname"]:"";
+                $msg_array["msg_title"] = isset($value["msg_title"])?$value["msg_title"]:"";
+                $msg_array["msg"] = isset($value["msg"])?$value["msg"]:"";
+            }
+        }
+        if(isset($_POST["msg_id"])){
+            $time = date("Y-m-d H:i:s",time()+8*60*60); //GMT+8
+            $id = $_POST["msg_id"];
+            $msg = $_POST["msg"];
+            $sql = "UPDATE center88_board
+                    SET msg='" . $msg . "', time= '" . $time . "'
+                    WHERE msg_id= '" . $id . "'";
+            if ( $this->dao->query($sql) ){
+                echo "修改成功!!";
+                header("Refresh: 2; URL=index.php");
+            }else{
+                echo "修改失敗!!";
+            }
+            $msg_array["nickname"] = $_POST["nickname"];
+            $msg_array["msg_title"] = $_POST["msg_title"];
+            $msg_array["msg"] = $_POST["msg"];
+        }
+        return $msg_array;
+    }
+    function deleteNote() {
+        if(isset($_GET['id'])){ //未修改前，輸出原本內容
+            $sql = "SELECT *
+                    FROM center88_board
+                    WHERE msg_id = " . $_GET['id'] . "
+                    ORDER BY time DESC";
+            $notes = $this->dao->fetchRows($sql);
+            foreach ($notes as $value)
+            {
+                return $value;
+            }
+        }
+        if(isset($_POST["msg_id"])){ //未修改前，輸出原本內容
+            $sql = "DELETE FROM center88_board 
+                    WHERE msg_id = '" . $_POST["msg_id"] . "'" ;
+            if ( $this->dao->query($sql) ){
+                echo "刪除成功!!";
+                header("Refresh: 2; URL=index.php");
+            }else{
+                echo "刪除失敗!!";
+            }
+        }
+    }
 }
 ?>

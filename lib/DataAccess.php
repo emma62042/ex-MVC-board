@@ -35,15 +35,7 @@ class DataAccess {
      */
     function fetchRows($sql) {
         $this->query($sql);
-        $arr=array();
-        $i=0;
-        while( $row = mysqli_fetch_assoc($this->query_id) )
-        //MYSQL_ASSOC引數決定了陣列鍵名用欄位名錶示
-        {
-            $arr[$i]=$row;
-            $i++;
-        }
-        return $arr;
+        return $this->query_id;
     }
     
     function rowsNum($sql) {
