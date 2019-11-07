@@ -53,5 +53,17 @@ class Model {
         //執行dataAccess裡的function
         return $data_rows;
     }
+    function pageArray($page, $search = NULL) {
+        
+        $page_array["page"] = $page;
+        $page_array["per"] = $per = 3;//每頁顯示筆數
+        if(empty($search)){
+            $page_array["data_rows"] = $this->checkAllRows();//所有頁數
+        }else {
+            $page_array["data_rows"] = $this->checkSearchRows($search);//所有頁數
+        }
+        $page_array["allpages"] = ceil($page_array["data_rows"]/$per);
+        return $page_array;
+    }
 }
 ?>

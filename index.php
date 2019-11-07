@@ -1,4 +1,3 @@
-
 <!DOCTYPE html><!-- html 5 文件類型聲明  -->
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -8,32 +7,32 @@
     </head>
 
     <body>
-        <div id = 'container'>
-            <div id = 'sign'>
+        <div class='container'>
+            <div class='sign'>
             </div>
-            <div id = 'banner'>
-                <p><a href = "index.php?action=list">center88留言板</a></p>
+            <div class='banner'>
+                <p><a href="index.php?action=list">center88留言板</a></p>
             </div>
-            <div id = 'sidebar'>
-                <table id = "bar_tb">
+            <div class='sidebar'>
+                <table class='bar_tb'>
                     <tr>
                         <td>
-                            <a href = "index.php?action=post">新增留言</a>
+                            <a href="index.php?action=post">新增留言</a>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <a href = "index.php?action=search">查詢留言</a>
+                            <a href="index.php?action=search">查詢留言</a>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <a href = "index.php?action=list">回首頁</a>
+                            <a href="index.php?action=list">回首頁</a>
                         </td>
                     </tr>
                 </table>
             </div>
-            <div id = 'content'>
+            <div class='content'>
             <?php
             //!index.php 總入口
             /*
@@ -42,10 +41,10 @@
              * 新增留言    :index.php?action=post
              * 刪除留言    :index.php?action=delete&;id=x
              */
-            require_once('lib/DataAccess.php');
-            require_once('lib/Model.php');
-            require_once('lib/View.php');
-            require_once('lib/Controller.php');
+            require_once("lib/DataAccess.php");
+            require_once("lib/Model.php");
+            require_once("lib/View.php");
+            require_once("lib/Controller.php");
             //建立DataAccess物件(請根據你的需要修改引數值)
             $dao=new DataAccess ("localhost:33060", "root", "root","center88_DB");
             //$dao = $conn
@@ -73,15 +72,15 @@
                             $controller = new searchController($dao, $page = 1, $search = NULL);
                         }
                         break;
-                    case "post":
+                    /*case "post":
                         $controller = new postController($dao); 
-                        break;
+                        break;*/
                     default:
                         $controller = new listController($dao);
                         break; //預設為顯示留言
                 }
             }else{
-                $controller = new listController($dao);
+                $controller = new listController($dao, $page = 1);
             }
             ?>
             </div>

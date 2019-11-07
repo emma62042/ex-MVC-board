@@ -11,7 +11,7 @@
     /* 相對的位置 */
 }
 
-#container {
+.container {
     box-shadow: 0px 0px 15px #888888;
     background-color: #ffffff;
     height: 1200px;
@@ -20,7 +20,7 @@
     font-family: 微軟正黑體;
 }
 
-#sign {
+.sign {
     background-color:#3E4E50;
     height: 35px;
     width: 1000px;
@@ -29,7 +29,7 @@
     text-align:right;
 }
 
-#banner {
+.banner {
     background-color: white;
     color: #35271F;
     border:5px #634624 solid;
@@ -40,16 +40,16 @@
     font-size: 23pt;
     margin: 10px 15px 10px 15px;
 }
-#banner a:link{
+.banner a:link{
     color: #35271F;
     text-decoration: none;
 }
-#banner a:visited {
+.banner a:visited {
     color: #35271F;
     text-decoration: none;
 }
 
-#sidebar {
+.sidebar {
     background-color: #9A6D38;
     height: 1000px;
     width: 200px;
@@ -58,7 +58,7 @@
     text-align: center;
 }
 
-#content {
+.content {
     background-color:blanchedalmond;
     border:5px #634624 solid;
     height: 930px;
@@ -76,7 +76,7 @@
     margin: 10px 10px 10px 10px;
 }
 
-#cont_tb{
+.cont_tb{
     background-color:#FFE5D9;
     border:5px #634624 double;
     border-collapse:collapse;
@@ -84,28 +84,28 @@
     margin-left:auto; /*置中*/
     margin-right:auto;/*置中*/
 }
-#cont_tb td{
+.cont_tb td{
     text-align: left;
     padding: 10px;
     border: 1px #FACFAD groove;
 }
 
 
-#bar_tb{
+.bar_tb{
     padding: 30px;
 }
-#bar_tb td{
+.bar_tb td{
     padding: 10px;
     border: 5px #FACFAD groove;
 }
-#bar_tb a:link{
+.bar_tb a:link{
 	font-size:18pt;
 	color: white;
 	text-decoration: none;
 	/*text-shadow:0px 0px 15px #fff;*/
 	text-align: center;
 }
-#bar_tb a:visited {
+.bar_tb a:visited {
 	color:white; 
 	text-decoration: none;
 } 
