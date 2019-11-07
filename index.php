@@ -41,6 +41,13 @@
              * 新增留言    :index.php?action=post
              * 刪除留言    :index.php?action=delete&;id=x
              */
+            /*function add(&$b) {
+                $b = $b + 10;
+                return $b;
+            }
+            $a='123';
+            $b=add($a);
+            echo "a=".$a."b=".$b;*/
             require_once("lib/DataAccess.php");
             require_once("lib/Model.php");
             require_once("lib/View.php");
@@ -72,9 +79,9 @@
                             $controller = new searchController($dao, $page = 1, $search = NULL);
                         }
                         break;
-                    /*case "post":
+                    case "post":
                         $controller = new postController($dao); 
-                        break;*/
+                        break;
                     default:
                         $controller = new listController($dao);
                         break; //預設為顯示留言

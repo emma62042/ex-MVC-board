@@ -16,7 +16,7 @@ class Model {
      * 並儲存在Model的成員變數$this->dao中
      * Model通過呼叫$this->dao的fetch方法執行所需的SQL語句
      */
-    function __construct($dao) {
+    function __construct(&$dao) {
         $this->dao=$dao;
     }
     function listNote($page, $per) {    //獲取全部留言
@@ -65,5 +65,46 @@ class Model {
         $page_array["allpages"] = ceil($page_array["data_rows"]/$per);
         return $page_array;
     }
+    function postNote() {
+        $msg_array["id"] = "";
+        $msg_array["nickname"] = "";
+        $msg_array["msg_title"] = "";
+        $msg_array["msg"] = "";
+        $msg_array["errname"] = "";
+        $msg_array["errtitle"] = "";
+        $msg_array["errmsg"] = "";
+        if (isset($_POST["nickname"]) && isset($_POST["msg_title"]) && isset($_POST["msg"]))
+        {
+            if (!empty($_POST["nickname"]) && !empty($_POST["msg_title"]) && !empty($_POST["msg"])){//不允許add送空字串
+                $msg_array["nickname"] = $_POST["nickname"];
+                $msg_array["msg_title"] = $_POST["msg_title"];
+                $msg_array["msg"] = $_POST["msg"];
+                $sql = "INSERT INTO center88_board (nickname, msg_title, msg)
+                        VALUES ('" . $msg_array["nickname"] . "' , '" . $msg_array["msg_title"] . "' , '" . $msg_array["msg"] . "' )";
+                
+                if ( $this->dao->query($sql) ){
+                    echo "新增成功!!";
+                    header("Refresh: 3; URL=index.php");
+                }else{
+                    echo "新增失敗!!";
+                }
+            }else{
+                $msg_array["nickname"] = empty($_POST["nickname"]) ? "" : $_POST["nickname"];
+                $msg_array["msg_title"] = empty($_POST["msg_title"]) ? "" : $_POST["msg_title"];
+                $msg_array["msg"] = empty($_POST["msg"]) ? "" : $_POST["msg"];
+                if(empty($_POST["nickname"])){
+                    $msg_array["errname"] = "請輸入暱稱";
+                }
+                if(empty($_POST["msg_title"])){
+                    $msg_array["errtitle"] = "請輸入標題";
+                }
+                if(empty($_POST["msg"])){
+                    $msg_array["errmsg"] = "請輸入留言";
+                }
+            }
+       }
+       return $msg_array;
+    }
+    
 }
 ?>

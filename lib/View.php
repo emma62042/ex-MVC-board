@@ -70,11 +70,12 @@ class listView   //顯示所有留言的子類
         <?php ;
     }
 }
+
 class searchView extends listView   //顯示所有留言的子類
 {
     function __construct($search = NULL)
     {?>
-    	<form action="index.php?action=search&" method="get">
+    	<form action="index.php" method="get">
                 <table cellpadding="10" width="600" border="1" align="center">
                     <tr>
                         <td>
@@ -90,4 +91,60 @@ class searchView extends listView   //顯示所有留言的子類
     <?php   
     }
 }
-?>
+
+class postView   //顯示所有留言的子類
+{
+    function __construct($msg_array, $title)
+    {
+        $id = empty($msg_array["id"]) ? "" : "&id=" . $msg_array["id"] ;
+        ?>
+        <h3><?php echo $title=='post' ? "新增" : "修改" ?>留言</h3>
+            <form action="index.php?action=<?php echo $title; echo $id?>" method="post">
+            <table  style="border:3px #000000 dashed;" cellpadding="10" width="600" border="1" align="center">
+                <tr>
+                    <td>
+                       	 您的暱稱：
+                    </td>
+                    <td>
+                        <input type="text" name="nickname" size="38" style="font-size:20px" value="<?php echo $msg_array["nickname"] ?>">
+                        <br/>
+                        <?php echo $msg_array["errname"] ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+						留言標題：
+                    </td>
+                    <td>
+                        <input type="text" name="msg_title" size="38" style="font-size:20px" value="<?php echo $msg_array["msg_title"] ?>">
+                        <br/>
+                        <?php echo $msg_array["errtitle"] ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                                                                        留言內容：
+                    </td>
+                    <td>
+                        <textarea cols="45" rows="5" type="text" name="msg" style="font-size:16px"><?php echo $msg_array["msg"] ?></textarea>
+                        <br/>
+                        <?php echo $msg_array["errmsg"] ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                    	<input type="hidden" name="msg_id" value="<?php echo $msg_array["id"]?>">
+                        <button type="submit"><?php echo $title=='post' ? "新增" : "修改" ?>完成</button>
+                    </td>
+                </tr>
+            </table>
+            </form>
+    <?php 
+    }
+}
+
+class modifyView extends postView{   //extends表示繼承
+    function __construct ($msg_array) { //建立model
+        parent::__construct($msg_array, "修改");
+    }
+}

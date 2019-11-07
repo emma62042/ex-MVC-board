@@ -11,7 +11,12 @@ class Controller {
     /*
      * 構造一個Model物件儲存於成員變數$this->model;
      */
-    function __construct ($dao) {
+    /*
+     * & 表示引用(類似c的指標),傳送的是參數位址
+     * 對此變數修改的話會改到原本的變數?
+     * 對於不會修改的大型陣列使用這種方法比較省記憶體空間
+     */
+    function __construct (&$dao) { 
         $this->model = new Model($dao);
     }
     
@@ -33,7 +38,6 @@ class listController extends Controller{   //extends表示繼承
         $notes = $this->model->listNote($page, $page_array["per"]);
         //執行model裡的listNote function
         //取得全部留言的result
-        
         $this->view = new listView($notes);
         $this->view->viewMsgResult($notes);
         $this->view->viewPage("list", $page_array);
@@ -68,9 +72,16 @@ class searchController extends Controller{   //extends表示繼承
 class postController extends Controller{
     function __construct ($dao) {//連資料庫
         parent::__construct($dao);//建立model
-        if ($this->model->postNote()) $success=1;
-        else $success=0;
-        //$this->view = new postView($success);
+        $msg_array = $this->model->postNote();//先收看看有沒有資料近來
+        $this->view = new postView($msg_array, "post");
+    }
+}
+//用於控制修改留言的子類
+class modifyController extends Controller{
+    function __construct ($dao, $id) {//連資料庫
+        parent::__construct($dao);//建立model
+        $msg_array = $this->model->modifyNote($id);//先收看看有沒有資料近來
+        $this->view = new postView($msg_array, "modify");
     }
 }
 ?>
